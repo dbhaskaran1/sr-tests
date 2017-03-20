@@ -10,3 +10,17 @@ pip install -r requirements
 cd frontend_tests
 
 pytest #to run the tests
+
+$ pytest
+=================================================================== test session starts ====================================================================
+
+platform darwin -- Python 2.7.10, pytest-3.0.7, py-1.4.32, pluggy-0.4.0
+rootdir: /Users/dbhaskaran/src/sr-tests/frontend_tests, inifile:
+
+collected 4 items
+
+test_login.py ....
+
+================================================================ 4 passed in 20.00 seconds =================================================================
+
+$
