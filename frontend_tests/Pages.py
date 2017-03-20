@@ -29,9 +29,7 @@ class LoginPage(BasePage):
     config = ConfigParser.ConfigParser()
     config.read('frontend.conf')
     url = config.get('site','login_page')
-    print url
 
-    #url = https://dev.smartresponse.org' + '/login'
     login_identifier = (By.ID, 'login_button')
     email_identifier = (By.ID, 'email')
     password_identifier = (By.ID, 'password')

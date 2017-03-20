@@ -10,6 +10,7 @@ from Pages import LoginPage
 class TestLoginPage(unittest.TestCase):
 
     config_file = ConfigParser.ConfigParser()
+    config_file.read('frontend.conf')
     def setup(self):
         print 'setup'
 
@@ -26,11 +27,28 @@ class TestLoginPage(unittest.TestCase):
         self.browser = webdriver.Chrome()
         loginPage = LoginPage(self.browser)
         loginPage.navigate()
-        loginPage.set_username('test1@smartresponse.org')
-        loginPage.set_password('test#1')
+        loginPage.set_username(self.config_file.get('creds','username'))
+        loginPage.set_password(self.config_file.get('creds','password'))
         homePage = loginPage.click_login()
         assert homePage.check_dashboard_link_shows_up()
 
+    def test_correct_pass1(self):
+        self.browser = webdriver.Chrome()
+        loginPage = LoginPage(self.browser)
+        loginPage.navigate()
+        loginPage.set_username(self.config_file.get('creds1','username'))
+        loginPage.set_password(self.config_file.get('creds1','password'))
+        homePage = loginPage.click_login()
+        assert homePage.check_dashboard_link_shows_up()
+
+    def test_correct_pass2(self):
+        self.browser = webdriver.Chrome()
+        loginPage = LoginPage(self.browser)
+        loginPage.navigate()
+        loginPage.set_username(self.config_file.get('creds2','username'))
+        loginPage.set_password(self.config_file.get('creds2','password'))
+        homePage = loginPage.click_login()
+        assert homePage.check_dashboard_link_shows_up()
 
     def teardown(self):
         self.wd.quit()

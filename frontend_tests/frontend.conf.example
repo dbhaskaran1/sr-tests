@@ -1,0 +1,16 @@
+[site]
+url=https://dev.smartresponse.org
+login_page=https://dev.smartresponse.org/login
+dashboard_page=https://dev.smartresponse.org/dashboard
+
+[creds]
+username=test1@smartresponse.org
+password=add_pass_here
+
+[creds1]
+username=test2@smartresponse.org
+password=add_pass_here
+
+[creds2]
+username=test3@smartresponse.org
+password=add_pass_here
