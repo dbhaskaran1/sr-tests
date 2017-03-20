@@ -11,6 +11,7 @@ class TestLoginPage(unittest.TestCase):
     def setup(self):
         print 'setup'
 
+    #@pytest.mark.skip
     def test_incorrect_pass(self):
         self.browser = webdriver.Chrome()
         loginPage = LoginPage(self.browser)
@@ -26,21 +27,9 @@ class TestLoginPage(unittest.TestCase):
         loginPage.navigate()
         loginPage.set_username('test1@smartresponse.org')
         loginPage.set_password('test#1')
-        loginPage.click_login()
+        homePage = loginPage.click_login()
+        assert homePage.check_dashboard_link_shows_up()
 
-    def incorrect_password(self):
-        wd = self.wd
-        login_button = wd.find_element_by_id('login_button')
-        email_field = wd.find_element_by_id('email')
-        password_field = wd.find_element_by_id('password')
-
-        email_field.send_keys('test@test.com')
-        password_field.send_keys('password')
-
-        login_button.click()
-        time.sleep(1)
-        error_message = wd.find_element_by_xpath('//div[ contains(text(),"Incorrect login information") ]')
-        assert error_message.text == 'Incorrect login information'
 
     def teardown(self):
         self.wd.quit()

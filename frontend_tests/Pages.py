@@ -2,6 +2,10 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import unittest
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.expected_conditions import staleness_of
+from contextlib import contextmanager
 
 
 class BasePage(object):
@@ -13,11 +17,23 @@ class BasePage(object):
     def navigate(self):
         self.wd.get(self.url)
 
+    #@contextmanager
+    def wait_for_item_to_load(self, identifier, timeout=30):
+        elem = WebDriverWait(self.wd, 10).until(
+            EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Dashboard'))
+        )
+        if elem:
+            return True
+        else:
+            return False
+
+
 class LoginPage(BasePage):
-    url = 'https://dev.smartresponse.org/' + '/login'
+    url = 'https://dev.smartresponse.org' + '/login'
     login_identifier = (By.ID, 'login_button')
     email_identifier = (By.ID, 'email')
     password_identifier = (By.ID, 'password')
+    error_message_identifier = (By.XPATH, '//div[ contains(text(),"Incorrect login information") ]')
 
     def set_password(self, password):
         elem = self.wd.find_element(*LoginPage.password_identifier)
@@ -32,8 +48,28 @@ class LoginPage(BasePage):
     def click_login(self):
         elem = self.wd.find_element(*LoginPage.login_identifier)
         elem.click()
+        return AdminDashboard(self.wd)
 
     def login_error_message_shown(self):
         time.sleep(1)
+        if self.wait_for_item_to_load(identifier= self.error_message_identifier):
+            return True
+        else:
+            return False
         error_message = self.wd.find_element_by_xpath('//div[ contains(text(),"Incorrect login information") ]')
         return error_message.text == 'Incorrect login information'
+
+class AdminDashboard(BasePage):
+    url = 'https://dev.smartresponse.org' + '/dashboard'
+    dashboard_identifier = ('By.PARTIAL_LINK_TEXT', 'Dashboard')
+
+    def check_on_right_page(self):
+        print self.wd.current_url
+        assert self.wd.current_url == self.url
+
+    def check_dashboard_link_shows_up(self):
+        if self.wait_for_item_to_load(identifier= self.dashboard_identifier):
+            return True
+        else:
+            return False
+
