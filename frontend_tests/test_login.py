@@ -9,7 +9,7 @@ from Pages import LoginPage
 
 class TestLoginPage(unittest.TestCase):
 
-    #config_file = ConfigParser.ConfigParser()
+    config_file = ConfigParser.ConfigParser()
     def setup(self):
         print 'setup'
 

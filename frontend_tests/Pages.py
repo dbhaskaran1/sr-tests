@@ -26,7 +26,12 @@ class BasePage(object):
 
 
 class LoginPage(BasePage):
-    url = 'https://dev.smartresponse.org' + '/login'
+    config = ConfigParser.ConfigParser()
+    config.read('frontend.conf')
+    url = config.get('site','login_page')
+    print url
+
+    #url = https://dev.smartresponse.org' + '/login'
     login_identifier = (By.ID, 'login_button')
     email_identifier = (By.ID, 'email')
     password_identifier = (By.ID, 'password')
@@ -49,7 +54,6 @@ class LoginPage(BasePage):
 
     def login_error_message_shown(self):
         time.sleep(1)
-        print self.error_message_identifier
         if self.wait_for_item_to_load(id_scheme=self.error_message_identifier[0],
                                       id_value=self.error_message_identifier[1]):
             return True
@@ -61,7 +65,6 @@ class AdminDashboard(BasePage):
     dashboard_identifier = (By.PARTIAL_LINK_TEXT, 'Dashboard')
 
     def check_on_right_page(self):
-        print self.wd.current_url
         assert self.wd.current_url == self.url
 
     def check_dashboard_link_shows_up(self):
