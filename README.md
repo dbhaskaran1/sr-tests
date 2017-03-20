@@ -11,6 +11,8 @@ cd frontend_tests
 
 pytest #to run the tests
 
+*Sample output should look like this.
+
 $ pytest
 =================================================================== test session starts ====================================================================
 
