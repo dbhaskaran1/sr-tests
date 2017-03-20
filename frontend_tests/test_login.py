@@ -3,15 +3,16 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import unittest
 import pytest
+import ConfigParser
 
 from Pages import LoginPage
 
 class TestLoginPage(unittest.TestCase):
 
+    #config_file = ConfigParser.ConfigParser()
     def setup(self):
         print 'setup'
 
-    #@pytest.mark.skip
     def test_incorrect_pass(self):
         self.browser = webdriver.Chrome()
         loginPage = LoginPage(self.browser)
