@@ -7,14 +7,6 @@ python:
 install:
   - pip install -r requirements.txt
 
-addons:
-  firefox: latest
-  apt:
-    sources:
-     - google-chrome
-    packages:
-     - google-chrome-stable fluxbox
-
 before_script:
   - wget http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
