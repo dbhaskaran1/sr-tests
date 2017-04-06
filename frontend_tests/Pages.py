@@ -73,6 +73,14 @@ class AdminDashboard(BasePage):
             return False
 
 
+class DashboardOrganizations(BasePage):
+    url = 'https://dev.smartresponse.org' + '/dashboard' + '/organization'
+    add_org_identifier = (By.PARTIAL_LINK_TEXT, 'Add Organization')
+    export_identifier = (By.PARTIAL_LINK_TEXT, 'Export')
+    print_identifier = (By.PARTIAL_LINK_TEXT, 'Print')
+
+
+
 class RegistrationPage(BasePage):
     url = 'https://dev.smartresponse.org' + '/registration'
     org_name_identifier = (By.ID, 'org_name')

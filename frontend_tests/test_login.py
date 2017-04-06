@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 import unittest
 import pytest
 import ConfigParser
+import os
 
 from Pages import LoginPage
 
@@ -11,11 +12,21 @@ class TestLoginPage(unittest.TestCase):
 
     config_file = ConfigParser.ConfigParser()
     config_file.read('frontend.conf')
+    browser = os.environ['BROWSER']
+
+    def get_browser(self):
+        if self.browser == 'Chrome':
+            return webdriver.Chrome()
+        elif self.browser == 'Firefox':
+            return webdriver.Firefox()
+        else:
+            exit -1
+
     def setup(self):
         print 'setup'
 
     def test_incorrect_pass(self):
-        self.browser = webdriver.Chrome()
+        self.browser = self.get_browser()
         loginPage = LoginPage(self.browser)
         loginPage.navigate()
         loginPage.set_username('test@test.com')
@@ -24,7 +35,7 @@ class TestLoginPage(unittest.TestCase):
         assert loginPage.login_error_message_shown()
 
     def test_correct_pass(self):
-        self.browser = webdriver.Chrome()
+        self.browser = self.get_browser()
         loginPage = LoginPage(self.browser)
         loginPage.navigate()
         loginPage.set_username(self.config_file.get('creds','username'))
@@ -33,7 +44,7 @@ class TestLoginPage(unittest.TestCase):
         assert homePage.check_dashboard_link_shows_up()
 
     def test_correct_pass1(self):
-        self.browser = webdriver.Chrome()
+        self.browser = self.get_browser()
         loginPage = LoginPage(self.browser)
         loginPage.navigate()
         loginPage.set_username(self.config_file.get('creds1','username'))
@@ -42,7 +53,7 @@ class TestLoginPage(unittest.TestCase):
         assert homePage.check_dashboard_link_shows_up()
 
     def test_correct_pass2(self):
-        self.browser = webdriver.Chrome()
+        self.browser = self.get_browser()
         loginPage = LoginPage(self.browser)
         loginPage.navigate()
         loginPage.set_username(self.config_file.get('creds2','username'))
