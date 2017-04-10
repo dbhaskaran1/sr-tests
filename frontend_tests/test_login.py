@@ -52,7 +52,6 @@ class TestLoginPage(unittest.TestCase):
         homePage = loginPage.click_login()
         assert homePage.check_dashboard_link_shows_up()
 
-    @pytest.mark.skip
     def test_correct_pass2(self):
         self.browser = self.get_browser()
         loginPage = LoginPage(self.browser)
